@@ -14,10 +14,10 @@ function init()
       vec2(-1,-1),
       vec2(0,0),
       vec2(1,1),
-      vec2(-1,1),
-      vec2(-1,0),
-      vec2(1,0)
     ];
+    points.push(vec2(-1,1));
+    points.push(vec2(-1,0));
+    points.push(vec2(1,0));
     
     //
     //  Configure WebGL
