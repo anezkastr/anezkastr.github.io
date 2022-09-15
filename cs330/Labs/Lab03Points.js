@@ -15,9 +15,8 @@ function init()
       vec2(0,0),
       vec2(0.6,0.6),
     ];
-    points.push(vec2(-1,1));
-    points.push(vec2(-1,0));
-    points.push(vec2(1,0));
+    points.push(vec2(0.2,0.4));
+    points.push(vec2(-0.6,0));
     
     //
     //  Configure WebGL
