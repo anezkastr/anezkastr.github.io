@@ -11,9 +11,9 @@ function init()
     if ( !gl ) { alert( "WebGL isn't available" ); }
     
     points=[
-      vec2(-1,-1),
+      vec2(-0.8,-0.8),
       vec2(0,0),
-      vec2(1,1),
+      vec2(0.6,0.6),
     ];
     points.push(vec2(-1,1));
     points.push(vec2(-1,0));
