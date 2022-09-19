@@ -11,15 +11,15 @@ function init()
     if ( !gl ) { alert( "WebGL isn't available" ); }
 
     points=[
-    vec2(   ,   ),
-    vec2(   ,   ),
-    vec2(   ,   ),
-    vec2(   ,   ),
-    vec2(   ,   ),
-    vec2(   ,   ),
-    vec2(   ,   ),
-    vec2(   ,   ),
-    vec2(   ,   )
+    vec2(-1.00,-0.95),
+    vec2(-1.00,-0.80),
+    vec2(-0.50,0.00),
+    vec2(-0.50,0.10),
+    vec2(0.00,0.20),
+    vec2(0.20,0.30),
+    vec2(0.50,0.40),
+    vec2(0.50,0.80),
+    vec2(1.00,0.90)
     ];
 
     //

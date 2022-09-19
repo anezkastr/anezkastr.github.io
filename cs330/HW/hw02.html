@@ -1,3 +1,10 @@
+<!--
+  Homework 2
+  Anežka Strnadová
+  09/16/2022
+  started with gasket5.html
+-->
+
 <!DOCTYPE html>
 <HTML>
 
@@ -21,27 +28,22 @@ recursive steps 0 <input id="slider" type="range"
 <script id="vertex-shader" type="x-shader/x-vertex">
 #version 300 es
 in vec4 aPosition;
-in vec4 aColor;
-out vec4 vColor;
 
 void
 main()
 {
-  gl_PointSize = 4.0;
   gl_Position = aPosition;
-  vColor = aColor;
 }
 </script>
 
 <script id="fragment-shader" type="x-shader/x-fragment">
 #version 300 es
 precision mediump float;
-in vec4 vColor;
 out vec4 fColor;
 void
 main()
 {
-  fColor = vColor;
+  fColor = vec4( 1.0, 0.0, 0.0, 1.0 );
 }
 </script>
 <script type="text/javascript" src="..Common/utility.js"></script>

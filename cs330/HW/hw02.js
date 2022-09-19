@@ -1,3 +1,10 @@
+/*
+Homework 2
+Anežka Strnadová
+09/16/2022
+started with gasket5.js
+*/
+
 "use strict";
 var gl;
 var points;
@@ -48,8 +55,8 @@ function init()
 
 function render() {
     var points=[
-        vec2(-0.95,0.0),
-        vec2(0.95,0.0),
+        vec2(-1.00,0.00),
+        vec2(1.00,0.00),
         ];
     
     positions = [];
