@@ -69,6 +69,7 @@ function init()
     gl.enableVertexAttribArray( colorLoc );
 
     // slider event listener
+    // I used code from gasket5.js
     document.getElementById("slider").onchange = function(event) {
     sliderVal = parseInt(event.target.value);
     render();
