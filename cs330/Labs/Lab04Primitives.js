@@ -51,11 +51,14 @@ function init()
 function render() {
     gl.clear( gl.COLOR_BUFFER_BIT );
 
-    //gl.drawArrays( gl.POINTS, 0, points.length );
+    gl.drawArrays( gl.POINTS, 0, points.length );
     //gl.drawArrays( gl.LINES, 0, points.length );
     //gl.drawArrays( gl.LINE_STRIP, 0, points.length );
     //gl.drawArrays( gl.LINE_LOOP, 0, points.length );
     //gl.drawArrays( gl.TRIANGLES, 0, points.length );
     //gl.drawArrays( gl.TRIANGLE_STRIP, 0, points.length );
-    gl.drawArrays( gl.TRIANGLE_FAN, 0, points.length );
+    //gl.drawArrays( gl.TRIANGLE_FAN, 0, points.length );
+    /*Do you notice any issues with fill for the triangle fan and triangle strip? Why?
+    I noticed that the triangles are overlapping sometimes.
+    */
 }
