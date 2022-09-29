@@ -108,8 +108,7 @@ function init()
 function render()
 {
     gl.clear(gl.COLOR_BUFFER_BIT);
-    console.log("t floored is:" + t.toFixed(2));
-    console.log("t is:" + t);
+    
     t += (morph ? increase : 0.0);
     if (t.toFixed(2) <= 0.0 || t.toFixed(2) >= 1.0){
         increase = -increase;
