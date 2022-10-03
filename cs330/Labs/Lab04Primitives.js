@@ -52,17 +52,30 @@ function render() {
     gl.clear( gl.COLOR_BUFFER_BIT );
 
     //gl.drawArrays( gl.POINTS, 0, points.length );
+    //draw points
+
     //gl.drawArrays( gl.LINES, 0, points.length );
+    //draw many short lines (between first and second point, between third and fourth point, ...)
+
     //gl.drawArrays( gl.LINE_STRIP, 0, points.length );
+    //connect first point with the second, second with the third, third with the fourth, ... 
+    //don´t connect the last one with the first one
+
     //gl.drawArrays( gl.LINE_LOOP, 0, points.length );
+    //connect all points with a line and the last one with the first one
+
     //gl.drawArrays( gl.TRIANGLES, 0, points.length );
+    //create triangles for 3 following points
+    //the first, the second and the third point create the first triangle
+    //the fourth, the fifth and the sixth point create the second triangle... 
+
     //gl.drawArrays( gl.TRIANGLE_STRIP, 0, points.length );
+    //create first triangle and then create another one using last 2 points of the first triangle and a new point
+
     gl.drawArrays( gl.TRIANGLE_FAN, 0, points.length );
+    //first point is fixed and all triangles will start in this point
+
     /*Do you notice any issues with fill for the triangle fan and triangle strip? Why?
-    I noticed that when the newly created triangles are overlapping each other, 
-    we can only see all triangles as one object because of the filling). We can not see individual triangles. 
-    The edges of this filled object connect original points but also new vertices that were formed
-    by overlapping triangles. And some of the original points "disappeared" in the filled area. 
-    To sum up, after viewing triangle strip or fan, we might no longer see some of the original points.
+    I noticed that when there are lines crossing each other, there can be a problem with the filling. 
     */
 }

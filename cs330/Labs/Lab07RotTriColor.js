@@ -70,15 +70,15 @@ function init()
     window.onkeydown = function(event) {
         var key = String.fromCharCode(event.keyCode);
         switch(key) {
-            case '1':
+            case "1":
                 rotation = !rotation;
                 break;
 
-            case '2':
+            case "2":
                 color = vec4(1.0, 0.0, 0.0, 1.0);
                 break;
             
-            case '3':
+            case "3":
                 color = vec4(0.0, 1.0, 0.0, 1.0);
                 break;
         }
