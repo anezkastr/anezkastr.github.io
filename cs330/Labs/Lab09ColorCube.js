@@ -38,7 +38,7 @@ var numElements = 29;
 
 var indices = [
     1, 0, 3, 2, 255,
-    2, 3, 7, 2, 255,
+    2, 3, 7, 6, 255,
     3, 0, 4, 7, 255,
     6, 5, 1, 2, 255,
     4, 5, 6, 7, 255,
@@ -119,5 +119,7 @@ function render()
     gl.uniform3fv(thetaLoc, theta);
 
     gl.drawElements(gl.TRIANGLE_FAN, numElements, gl.UNSIGNED_BYTE, 0);
+    //the more I reduce numElements, the more parts of the cube become transparent
+
     requestAnimationFrame(render);
 }
