@@ -1,3 +1,9 @@
+<!--
+  Homework 4
+  Anežka Strnadová
+  09/28/2022
+  started with Lab09ColorCube.html and homework 3
+-->
 <!DOCTYPE html>
 <html>
 <HEAD>
@@ -7,17 +13,23 @@
 <body>
 
 <canvas id="gl-canvas" width="512"" height="512"> </canvas>
-
+</br>
+<button id = "ButtonT">Toggle Rotation</button>
+<button id = "Morph">Toggle Morphing</button>
+</br>
+</br>
+</br>
 <button id= "xButton">Rotate X</button>
 <button id= "yButton">Rotate Y</button>
 <button id= "zButton">Rotate Z</button>
-<button id = "ButtonT">Toggle Rotation</button>
 <script id="vertex-shader" type="x-shader/x-vertex">
 #version 300 es
 
-in  vec4 aPosition;
-in  vec4 aColor;
+in vec4 uPosition;
+in vec4 iPosition;
+in vec4 aColor;
 out vec4 vColor;
+uniform float t;
 
 uniform vec3 uTheta;
 
@@ -47,8 +59,7 @@ void main()
 		    0.0,  0.0, 0.0, 1.0 );
 
     vColor = aColor;
-    gl_Position = rz * ry * rx * aPosition;
-    gl_Position.z = -gl_Position.z;
+    gl_Position = rz * ry * rx * vec4(t*iPosition.x + (1.0-t)*uPosition.x, t*iPosition.y + (1.0-t)*uPosition.y, t*iPosition.z + (1.0-t)*uPosition.z, 1);
 }
 </script>
 

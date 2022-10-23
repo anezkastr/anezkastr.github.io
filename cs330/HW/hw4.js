@@ -1,3 +1,10 @@
+/*
+  Homework 4
+  Anežka Strnadová
+  09/28/2022
+  started with Lab09ColorCube.js and homework 3
+*/
+
 "use strict";
 
 var canvas;
@@ -10,136 +17,197 @@ var zAxis = 2;
 var theta = [0, 0, 0];
 var thetaLoc;
 var flag = false;
-var numElements = 89;
+var numElements = 160;
+var t = 0.0;
+var tLoc;
+var morph = false;
+var increase = 0.01;
+var color = vec4(0.0, 0.0, 1.0, 1.0);
 
-    var vertices_u = [
-        vec3(-0.5, 0.5, 0.5),
-        vec3(-0.25, 0.5, 0.5),
-        vec3(-0.25,-0.25, 0.5),
-        vec3(0.25,-0.25, 0.5),
-        vec3(0.25,0.5, 0.5),
-        vec3(0.5,0.5, 0.5),
-        vec3(0.5,-0.5, 0.5),
-        vec3(0.1,-0.5, 0.5),
-        vec3(-0.1,-0.5, 0.5),
-        vec3(-0.5,-0.5, 0.5),
-        vec3(-0.5,-0.1, 0.5),
-        vec3(-0.5,0.1, 0.5),
+//Define the shape of the letter U
+var vertices_u = [
+    //front side
+    vec3(-0.5, 0.5, 0.25),
+    vec3(-0.2, 0.5, 0.25),
+    vec3(-0.2, 0.25, 0.25),
+    vec3(-0.2, -0.25, 0.25),
+    vec3(0.2, -0.25, 0.25),
+    vec3(0.2, 0.25, 0.25),
+    vec3(0.2, 0.5, 0.25),
+    vec3(0.5, 0.5, 0.25),
+    vec3(0.5, 0.25, 0.25), 
+    vec3(0.5, 0.25, 0.25),
+    vec3(0.5, -0.25, 0.25),
+    vec3(0.5, -0.25, 0.25),
+    vec3(0.5, -0.5, 0.25),
+    vec3(0.2, -0.5, 0.25),
+    vec3(-0.2, -0.5, 0.25),
+    vec3(-0.5, -0.5, 0.25),
+    vec3(-0.5, -0.25, 0.25),
+    vec3(-0.5, -0.25, 0.25),
+    vec3(-0.5, 0.25, 0.25),
+    vec3(-0.5, 0.25, 0.25),
 
-        vec3(-0.5, 0.5, -0.5),
-        vec3(-0.25, 0.5, -0.5),
-        vec3(-0.25,-0.25, -0.5),
-        vec3(0.25,-0.25, -0.5),
-        vec3(0.25,0.5, -0.5),
-        vec3(0.5,0.5, -0.5),
-        vec3(0.5,-0.5, -0.5),
-        vec3(0.1,-0.5, -0.5),
-        vec3(-0.1,-0.5, -0.5),
-        vec3(-0.5,-0.5, -0.5),
-        vec3(-0.5,-0.1, -0.5),
-        vec3(-0.5,0.1, -0.5),
+    //back side
+    vec3(-0.5, 0.5, -0.25),
+    vec3(-0.2, 0.5, -0.25),
+    vec3(-0.2, 0.25, -0.25),
+    vec3(-0.2, -0.25, -0.25),
+    vec3(0.2, -0.25, -0.25),
+    vec3(0.2, 0.25, -0.25),
+    vec3(0.2, 0.5, -0.25),
+    vec3(0.5, 0.5, -0.25),
+    vec3(0.5, 0.25, -0.25), 
+    vec3(0.5, 0.25, -0.25),
+    vec3(0.5, -0.25, -0.25),
+    vec3(0.5, -0.25, -0.25),
+    vec3(0.5, -0.5, -0.25),
+    vec3(0.2, -0.5, -0.25),
+    vec3(-0.2, -0.5, -0.25),
+    vec3(-0.5, -0.5, -0.25),
+    vec3(-0.5, -0.25, -0.25),
+    vec3(-0.5, -0.25, -0.25),
+    vec3(-0.5, 0.25, -0.25),
+    vec3(-0.5, 0.25, -0.25),
     ];
 
-    var vertices_i = [
-        vec3(-0.5, 0.5, 0.5),
-        vec3(0.5, 0.5, 0.5),
-        vec3(0.5,0.35, 0.5),
-        vec3(0.15,0.35, 0.5),
-        vec3(0.15,-0.35, 0.5),
-        vec3(0.5,-0.35, 0.5),
-        vec3(0.5,-0.5, 0.5),
-        vec3(-0.5,-0.5, 0.5),
-        vec3(-0.5,-0.35, 0.5),
-        vec3(-0.15,-0.35, 0.5),
-        vec3(-0.15,0.35, 0.5),
-        vec3(-0.5, 0.35, 0.5),
+//Define the shape of the letter I
+var vertices_i = [
+    //front side
+    vec3(-0.5, 0.5, 0.25),
+    vec3(-0.2, 0.5, 0.25),
+    vec3(-0.2, 0.5, 0.25),
+    vec3(-0.2, 0.5, 0.25),
+    vec3(0.2, 0.5, 0.25),
+    vec3(0.2, 0.5, 0.25),
+    vec3(0.2, 0.5, 0.25),
+    vec3(0.5, 0.5, 0.25),
+    vec3(0.5, 0.25, 0.25), 
+    vec3(0.2, 0.25, 0.25),
+    vec3(0.2, -0.25, 0.25),
+    vec3(0.5, -0.25, 0.25),
+    vec3(0.5, -0.5, 0.25),
+    vec3(0.2, -0.5, 0.25),
+    vec3(-0.2, -0.5, 0.25),
+    vec3(-0.5, -0.5, 0.25),
+    vec3(-0.5, -0.25, 0.25),
+    vec3(-0.2, -0.25, 0.25),
+    vec3(-0.2, 0.25, 0.25),
+    vec3(-0.5, 0.25, 0.25),
 
-        vec3(-0.5, 0.5, -0.5),
-        vec3(0.5, 0.5, -0.5),
-        vec3(0.5,0.35, -0.5),
-        vec3(0.15,0.35, -0.5),
-        vec3(0.15,-0.35, -0.5),
-        vec3(0.5,-0.35, -0.5),
-        vec3(0.5,-0.5, -0.5),
-        vec3(-0.5,-0.5, -0.5),
-        vec3(-0.5,-0.35, -0.5),
-        vec3(-0.15,-0.35, -0.5),
-        vec3(-0.15,0.35, -0.5),
-        vec3(-0.5, 0.35, -0.5),
-    ]
-
-    var vertexColors = [
-        vec4(1.0, 0.0, 0.0, 1.0),  // black
-        vec4(1.0, 0.0, 0.0, 1.0),  // red
-        vec4(1.0, 0.0, 0.0, 1.0),  // yellow
-        vec4(1.0, 0.0, 0.0, 1.0),  // green
-        vec4(1.0, 0.0, 0.0, 1.0),  // blue
-        vec4(1.0, 0.0, 0.0, 1.0),  // magenta
-        vec4(1.0, 0.0, 0.0, 1.0),  // white
-        vec4(1.0, 0.0, 0.0, 1.0),   // cyan
-        vec4(1.0, 0.0, 0.0, 1.0),  // black
-        vec4(1.0, 0.0, 0.0, 1.0),  // red
-        vec4(1.0, 0.0, 0.0, 1.0),  // yellow
-        vec4(1.0, 0.0, 0.0, 1.0),  // green
-        vec4(0.0, 0.0, 1.0, 1.0),  // blue
-        vec4(0.0, 0.0, 1.0, 1.0),  // magenta
-        vec4(0.0, 0.0, 1.0, 1.0),  // white
-        vec4(0.0, 0.0, 1.0, 1.0),   // cyan
-        vec4(0.0, 0.0, 1.0, 1.0),  // black
-        vec4(0.0, 0.0, 1.0, 1.0),  // red
-        vec4(0.0, 0.0, 1.0, 1.0),  // yellow
-        vec4(0.0, 0.0, 1.0, 1.0),  // green
-        vec4(0.0, 0.0, 1.0, 1.0),  // blue
-        vec4(0.0, 0.0, 1.0, 1.0),  // magenta
-        vec4(0.0, 0.0, 1.0, 1.0),  // white
-        vec4(0.0, 0.0, 1.0, 1.0) 
+    //back side
+    vec3(-0.5, 0.5, -0.25),
+    vec3(-0.2, 0.5, -0.25),
+    vec3(-0.2, 0.5, -0.25),
+    vec3(-0.2, 0.5, -0.25),
+    vec3(0.2, 0.5, -0.25),
+    vec3(0.2, 0.5, -0.25),
+    vec3(0.2, 0.5, -0.25),
+    vec3(0.5, 0.5, -0.25),
+    vec3(0.5, 0.25, -0.25), 
+    vec3(0.2, 0.25, -0.25),
+    vec3(0.2, -0.25, -0.25),
+    vec3(0.5, -0.25, -0.25),
+    vec3(0.5, -0.5, -0.25),
+    vec3(0.2, -0.5, -0.25),
+    vec3(-0.2, -0.5, -0.25),
+    vec3(-0.5, -0.5, -0.25),
+    vec3(-0.5, -0.25, -0.25),
+    vec3(-0.2, -0.25, -0.25),
+    vec3(-0.2, 0.25, -0.25),
+    vec3(-0.5, 0.25, -0.25),
     ];
 
-// indices of the 12 triangles that compise the cube
-
-var indices_u = [
-    0, 12, 21, 9, 255,
-    0, 1, 2, 11, 255,
-    3, 4, 5, 6, 255,
-    3, 6, 7, 2, 255,
-    9, 2, 7, 8, 255,
-    11, 2, 9, 10, 255,
-    0, 1, 13, 12, 255,
-    4, 5, 17, 16, 255,
-    9, 6, 18, 21, 255,
-    5, 17, 18, 6, 255,
-    21, 9, 11, 13, 255,
-    0, 12, 13, 11, 255,
-    2, 14, 15, 3, 255,
-    12, 13, 14, 23, 255,
-
-    15, 16, 17, 18, 255,
-    15, 18, 19, 14, 255,
-    21, 14, 19, 20, 255,
-    23, 14, 21, 22, 255,
-
+//Define colors
+var vertexColors = [
+    vec4(1.0, 0.0, 1.0, 1.0),
+    vec4(1.0, 0.0, 1.0, 1.0),
+    vec4(1.0, 0.0, 1.0, 1.0),
+    vec4(1.0, 0.0, 1.0, 1.0),
+    vec4(1.0, 0.0, 1.0, 1.0),
+    vec4(1.0, 0.0, 1.0, 1.0),
+    vec4(1.0, 0.0, 1.0, 1.0),
+    vec4(1.0, 0.0, 1.0, 1.0),
+    vec4(1.0, 0.0, 1.0, 1.0),
+    vec4(1.0, 0.0, 1.0, 1.0),
+    vec4(1.0, 0.0, 1.0, 1.0),
+    vec4(1.0, 0.0, 1.0, 1.0),
+    vec4(1.0, 0.0, 1.0, 1.0),
+    vec4(1.0, 0.0, 1.0, 1.0),
+    vec4(1.0, 0.0, 1.0, 1.0),
+    vec4(1.0, 0.0, 1.0, 1.0),
+    vec4(1.0, 0.0, 1.0, 1.0),
+    vec4(1.0, 0.0, 1.0, 1.0),
+    vec4(1.0, 0.0, 1.0, 1.0),
+    vec4(1.0, 0.0, 1.0, 1.0),
+    vec4(1.0, 1.0, 0.0, 1.0),
+    vec4(1.0, 1.0, 0.0, 1.0),
+    vec4(1.0, 1.0, 0.0, 1.0),
+    vec4(1.0, 1.0, 0.0, 1.0),
+    vec4(1.0, 1.0, 0.0, 1.0),
+    vec4(1.0, 1.0, 0.0, 1.0),
+    vec4(1.0, 1.0, 0.0, 1.0),
+    vec4(1.0, 1.0, 0.0, 1.0),
+    vec4(1.0, 1.0, 0.0, 1.0),
+    vec4(1.0, 1.0, 0.0, 1.0),
+    vec4(1.0, 1.0, 0.0, 1.0),
+    vec4(1.0, 1.0, 0.0, 1.0),
+    vec4(1.0, 1.0, 0.0, 1.0),
+    vec4(1.0, 1.0, 0.0, 1.0),
+    vec4(1.0, 1.0, 0.0, 1.0),
+    vec4(1.0, 1.0, 0.0, 1.0),
+    vec4(1.0, 1.0, 0.0, 1.0),
+    vec4(1.0, 1.0, 0.0, 1.0),
+    vec4(1.0, 1.0, 0.0, 1.0),
+    vec4(1.0, 1.0, 0.0, 1.0),
+    
 ];
 
-var indices_i = [
-    0, 12, 13, 1, 255,
-    1, 13, 14, 2, 255,
-    3, 15, 14, 2, 255,
-    3, 15, 16, 4, 255,
-    4, 16, 17, 5, 255,
-    7, 19, 18, 6, 255,
-    7, 8, 20, 19, 255,
-    8, 20, 21, 9, 255,
-    9, 10, 22, 21, 255,
-    10, 11, 23, 22, 255,
-    11, 0, 12, 23, 255,
-    0, 1, 2, 11, 255,
-    10, 3, 4, 9, 255,
-    8, 5, 6, 7, 255,
-    5, 17, 18, 6, 255,
-    12, 13, 14, 23, 255,
-    22, 15, 16, 21, 255,
-    20, 17, 18, 19, 255,
+// indices of the triangles that compise the letters
+var indices = [
+    //front side
+    3, 4, 13, 14, 255,
+    16, 11, 12, 15, 255,
+    18, 2, 14, 17, 255,
+    0, 1, 18, 19, 255,
+    5, 9, 10, 13, 255,
+    1, 2, 18, 19, 255,
+    6, 7, 8, 9, 255,
+    6, 8, 9, 5, 255,
 
+    //back side
+    23, 24, 33, 34, 255,
+    36, 31, 32, 35, 255,
+    38, 22, 34, 37, 255,
+    20, 21, 38, 39, 255,
+    25, 29, 30, 33, 255,
+    21, 22, 38, 39, 255,
+    26, 27, 28, 29, 255,
+    26, 28, 29, 25, 255,
+
+    //left
+    6, 26, 24, 4, 255,
+    16, 36, 35, 15, 255, 
+    0, 20, 39, 19, 255,
+    18, 38, 37, 17, 255,
+
+    //right
+    1, 21, 23, 3, 255,
+    7, 27, 28, 8, 255,
+    11, 31, 32, 12, 255,
+    9, 29, 30, 10, 255,
+
+    //up
+    0, 20, 21, 1, 255,
+    3, 23, 24, 4, 255,
+    6, 26, 27, 7, 255,
+    10, 30, 31, 11, 255,
+    16, 36, 37, 17, 255,
+
+    //down
+    15, 35, 32, 12, 255,
+    9, 29, 28, 8,  255,
+    19, 39, 38, 18, 255,
 ];
 
 init();
@@ -163,14 +231,33 @@ function init()
     //
     var program = initShaders(gl, "vertex-shader", "fragment-shader");
     gl.useProgram(program);
+    var iBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, iBuffer);
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint8Array(indices), gl.STATIC_DRAW);
+
+    // vertex array attribute buffer
+    var v2Buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, v2Buffer);
+    gl.bufferData(gl.ARRAY_BUFFER, flatten(vertices_i), gl.STATIC_DRAW);
+
+    var iPosition = gl.getAttribLocation(program, "iPosition");
+    gl.vertexAttribPointer(iPosition, 3, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(iPosition);
 
     // array element buffer
 
-    var iBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, iBuffer);
-    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint8Array(indices_u), gl.STATIC_DRAW);
+    var uBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, uBuffer);
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint8Array(indices), gl.STATIC_DRAW);
 
-    // color array atrribute buffer
+    // vertex array attribute buffer
+    var vBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, flatten(vertices_u), gl.STATIC_DRAW);
+
+    var uPosition = gl.getAttribLocation( program, "uPosition");
+    gl.vertexAttribPointer(uPosition, 3, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(uPosition );
 
     var cBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, cBuffer);
@@ -179,21 +266,11 @@ function init()
     var colorLoc = gl.getAttribLocation(program, "aColor");
     gl.vertexAttribPointer(colorLoc, 4, gl.FLOAT, false, 0, 0);
     gl.enableVertexAttribArray(colorLoc);
-
-    // vertex array attribute buffer
-
-    var vBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, vBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, flatten(vertices_u), gl.STATIC_DRAW);
-
-    var positionLoc = gl.getAttribLocation( program, "aPosition");
-    gl.vertexAttribPointer(positionLoc, 3, gl.FLOAT, false, 0, 0);
-    gl.enableVertexAttribArray(positionLoc );
-
     thetaLoc = gl.getUniformLocation(program, "uTheta");
+    tLoc = gl.getUniformLocation( program, "t" );
+
 
     //event listeners for buttons
-
     document.getElementById( "xButton" ).onclick = function () {
         axis = xAxis;
     };
@@ -205,6 +282,9 @@ function init()
     };
     document.getElementById("ButtonT").onclick = function(){flag = !flag;};
 
+    // button listener here
+   document.getElementById("Morph").onclick = function () {
+    morph = !morph;};
     render();
 }
 
@@ -212,11 +292,16 @@ function render()
 {
     gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-    if(flag) theta[axis] += 2.0;
+    t += (morph ? increase : 0.0);
+    if (t.toFixed(2) <= 0.0 || t.toFixed(2) >= 1.0){
+        increase = -increase;
+    }
+    
+    gl.uniform1f(tLoc, t);
+
+    if(flag) theta[axis] += 0.5;
     gl.uniform3fv(thetaLoc, theta);
 
     gl.drawElements(gl.TRIANGLE_FAN, numElements, gl.UNSIGNED_BYTE, 0);
-    //the more I reduce numElements, the more parts of the cube become transparent
-
     requestAnimationFrame(render);
 }
