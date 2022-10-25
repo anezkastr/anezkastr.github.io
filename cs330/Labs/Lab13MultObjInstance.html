@@ -35,6 +35,9 @@ void main()
     MVlocal = uModelViewMatrix*Tx*Scale;
     gl_Position = uProjectionMatrix*MVlocal*aPosition;
     vColor = aColor;
+    // we add gl_InstanceID to transX because we always want to draw the new cube on a different place than the previous one
+    // that keeps moving the cubes to the right
+    // we use the same matrix for each cube, we just have to change transformations to move and rotate the cubes
 }
 </script>
 

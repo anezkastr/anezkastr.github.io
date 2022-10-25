@@ -18,7 +18,7 @@ var colorLoc;
 var delay = 100;
 var morph = false;
 
-var increase = 0.1;
+var increase = 0.05;
 
 init();
 
@@ -48,8 +48,8 @@ function init()
         vec2(0.25,0.5),
         vec2(0.5,0.5),
         vec2(0.5,-0.5),
-        vec2(0.1,-0.5),
-        vec2(-0.1,-0.5),
+        vec2(0.35,-0.5),
+        vec2(-0.35,-0.5),
         vec2(-0.5,-0.5),
         vec2(-0.5,-0.1),
         vec2(-0.5,0.1),
