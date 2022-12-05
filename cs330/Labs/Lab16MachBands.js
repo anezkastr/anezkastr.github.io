@@ -5,7 +5,7 @@ var shadedCube2 = function() {
 var canvas;
 var gl;
 
-var numPositions  = 36;
+var numPositions  = 40;
 
 var positionsArray = [];
 var normalsArray = [];
