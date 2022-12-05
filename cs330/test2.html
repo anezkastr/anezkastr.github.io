@@ -27,9 +27,8 @@ uniform float uShininess;
 void main()
 {
      float t = tParam;
-     vColor = ambient + diffuse + specular;
-    vColor.a = 1.0;
-    vColor = aColor;
+     
+    //vColor = aColor;
 
     vec3 pos = -(uModelViewMatrix * aPosition).xyz;
 
@@ -62,6 +61,8 @@ void main()
     }
 
     gl_Position = uProjectionMatrix*uModelViewMatrix*vec4(t*aPosition.x+(1.0-t)*bPosition.x, t*aPosition.y+(1.0-t)*bPosition.y, t*aPosition.z+(1.0-t)*bPosition.z, 1);
+    vColor = ambient + diffuse +specular;
+    vColor.a = 1.0;
 }
 </script>
 
