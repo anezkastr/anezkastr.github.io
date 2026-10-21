@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>D3 Tutorial</title>
+    <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://d3js.org/d3-selection-multi.v1.min.js"></script> 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="./public/main.css" rel="stylesheet">
+    <script defer src="https://unpkg.com/svelte@3.42.4/dist/runtime.js"></script>
+
+    <script type="text/javascript" src="public/myD3app.js"></script>
+  </head>
+
+  <body>  
+    <button id="moveButton" onclick="startMoving()" style="width: 40px; height: 40px; padding: 0;">
+      <img src="/images/cursor.png" style="width: 100%; height: 100%;"/>
+    </button>
+    <button id="resizeButton" onclick="startResizing()" style="width: 40px; height: 40px; padding: 0;">
+      <img src="/images/resize.png" style="width: 100%; height: 100%;"/>
+    </button>
+    <button id="colorButton" onclick="editColor()" style="width: 40px; height: 40px; padding: 0;">
+      <img src="/images/varnish.png" style="width: 100%; height: 100%;"/>
+    </button>
+    <button onclick="addRectangles()">Add Rectangles</button>
+    </div>
+      <div id="palette">
+        <div class="row">
+        <div class="swatch" style="background-color: red;" onclick="selectColor('red')" ></div>
+        <div class="swatch" style="background-color: orange;" onclick="selectColor('orange')"></div>
+        <div class="swatch" style="background-color: blue;" onclick="selectColor('blue')"></div>
+        <div class="swatch" style="background-color: green;" onclick="selectColor('green')"></div>
+        <div class="swatch" style="background-color: white;" onclick="selectColor('white')"></div>
+        <div class="swatch" style="background-color: black;" onclick="selectColor('black')"></div>
+        Current: <div id="current" class="swatch" style="background-color: white;"></div>
+      </div>
+    </div>
+    <div id="canvas-container">
+      <svg id="myCanvas" width="960" height="600">
+        <rect width="960" height="600" fill="white"></rect>
+      </svg>
+    </div>
+
+    <script>
+      var svg = d3.select("svg"),
+          width = +svg.attr("width"),
+          height = +svg.attr("height");
+      
+      var rectWidth = 300;
+      var rectHeight = 200;
+
+      //generate random positions for rectangles
+      var rect_data = []; 
+
+      //add svg rectangles
+      /*var rectangles = d3.select("svg")
+	                    .append("g")
+	                    .attr("class", "rectangles")
+	                    .selectAll("rect")
+                        .data(rect_data)
+                        .enter()
+                        .append("rect")
+                        .attr("x", function(d) {return(d.x)})
+                        .attr("y", function(d) {return(d.y)})
+                        .attr("width", rectWidth)
+                        .attr("height", rectHeight)
+                        .style("stroke-width", 5)
+                        .style("stroke", "black")    
+                        .style("fill", "white")*/
+
+
+      // add svg rectangles
+var rectangles = d3.select("svg")
+.append("g")
+.attr("class", "rectangles")
+.selectAll("rect")
+.data(rect_data)
+.enter()
+.append("rect")
+.attr("x", function (d) { return d.x })
+.attr("y", function (d) { return d.y })
+.attr("width", rectWidth)
+.attr("height", rectHeight)
+.style("stroke-width", 5)
+.style("stroke", "black")
+.style("fill", "white");
+
+// Function to generate rectangle data
+function generateRectanglesData(count) {
+return d3.range(count).map(function () {
+    return {
+        x: Math.round(Math.random() * (width - rectWidth)),
+        y: Math.round(Math.random() * (height - rectHeight))
+    };
+});
+}
+
+// Function to add more rectangles
+function addRectangles() {
+var newData = {
+  x: 10,
+  y: 10
+};
+
+rect_data = rect_data.concat(newData);
+console.log(rect_data.length);
+rectangles = d3.select(".rectangles")
+    .selectAll("rect")
+    .data(rect_data)
+    .enter()
+    .append("rect")
+    .attr("x", function (d) { return d.x })
+    .attr("y", function (d) { return d.y })
+    .attr("width", rectWidth)
+    .attr("height", rectHeight)
+    .style("stroke-width", 5)
+    .style("stroke", "black")
+    .style("fill", "white");
+  startMoving();
+}
+
+
+                        
+      var move_handler = d3.drag()
+                          .on("drag", function(d) {
+                            d3.select(this).raise()
+                              .attr("x", d.x = d3.event.x)
+                              .attr("y", d.y = d3.event.y);
+                          });
+      
+      function handleDrag(d) {
+        d3.select(this).raise();
+                              var startX = d.x;
+                              var startY = d.y;
+                              var rect = d3.select(this);
+                              var svg = d3.select("svg");
+                              var svgRect = svg.node().getBoundingClientRect();
+                              var svgX = svgRect.left;
+                              var svgY = svgRect.top;
+            
+                              d3.select(window)
+                                .on("mousemove", function() {
+                                  var svgMouseX = d3.event.clientX - svgX;
+                                  var svgMouseY = d3.event.clientY - svgY;
+                                  var newWidth = Math.max(40, svgMouseX - startX);
+                                  var newHeight = Math.max(40, svgMouseY - startY);
+            
+                                  rect
+                                    .attr("width", newWidth)
+                                    .attr("height", newHeight);
+                                })
+                              .on("mouseup", function() {
+                                d3.select(window)
+                                  .on("mousemove", null)
+                                  .on("click", null)
+                                  .on("mouseup", null)
+                                  .on("mousedown", null);
+                              });
+
+                            rect.on("click", function() {
+                              d3.event.stopPropagation();
+                              d3.select(window)
+                                .on("mousemove", null)
+                                .on("click", null)
+                                .on("mouseup", null)
+                                .on("mousedown", null);
+                              });
+      }
+
+      var resize_handler = d3.drag()
+                            .on("start", function(d) {
+                              d3.select(this).raise();
+                              var startX = d.x;
+                              var startY = d.y;
+                              var rect = d3.select(this);
+                              var svg = d3.select("svg");
+                              var svgRect = svg.node().getBoundingClientRect();
+                              var svgX = svgRect.left;
+                              var svgY = svgRect.top;
+            
+                              d3.select(window)
+                                .on("mousemove", function() {
+                                  var svgMouseX = d3.event.clientX - svgX;
+                                  var svgMouseY = d3.event.clientY - svgY;
+                                  var newWidth = Math.max(40, svgMouseX - startX);
+                                  var newHeight = Math.max(40, svgMouseY - startY);
+            
+                                  rect
+                                    .attr("width", newWidth)
+                                    .attr("height", newHeight);
+                                })
+                              .on("mouseup", function() {
+                                d3.select(window)
+                                  .on("mousemove", null)
+                                  //.on("click", null)
+                                  .on("mouseup", null)
+                                  .on("mousedown", null);
+                              });
+
+                            rect.on("click", function() {
+                              d3.event.stopPropagation();
+                              d3.select(window)
+                                .on("mousemove", null)
+                                //.on("click", null)
+                                .on("mouseup", null)
+                                .on("mousedown", null);
+                              });
+                            });
+            
+      var selectedRectangle = null;
+      var editColorBool = false;
+      var currentColor = "white";
+
+      function selectColor(color){
+        currentColor = color;
+        $('#current').css('background-color', color);
+        changeColor(color);
+      }
+
+      function changeColor(){
+        var rectanglesGroup = d3.select("svg").select(".rectangles");
+        var rectangles = rectanglesGroup.selectAll("rect");
+
+// Loop through each rect element
+rectangles.each(function (d, i) {
+    // 'this' refers to the current DOM element (rect)
+    var currentRect = d3.select(this);
+    currentRect.on("click", function () {
+      if (editColorBool) {
+          selectedRectangle = d3.select(d3.event.target);
+          if (selectedRectangle.node() && selectedRectangle.node().nodeName === "rect") {
+              selectedRectangle.style("fill", currentColor);
+          }
+      }});
+
+    move_handler(currentRect);
+})};
+
+
+
+      move_handler(rectangles);
+
+      function startMoving(){
+        d3.selectAll("button").style("background-color", "white");
+        d3.select("#moveButton").style("background-color", "cyan");
+        var rectanglesGroup = d3.select("svg").select(".rectangles");
+        console.log("Moving started");
+        var rectangles = rectanglesGroup.selectAll("rect");
+
+// Loop through each rect element
+rectangles.each(function (d, i) {
+    // 'this' refers to the current DOM element (rect)
+    var currentRect = d3.select(this);
+
+    move_handler(currentRect);
+});
+        editColorBool = false;
+      }
+
+      function startResizing(){
+        d3.selectAll("button").style("background-color", "white");
+        d3.select("#resizeButton").style("background-color", "cyan");
+        var rectanglesGroup = d3.select("svg").select(".rectangles");
+
+// Select all rect elements within the group
+var rectangles = rectanglesGroup.selectAll("rect");
+
+// Loop through each rect element
+rectangles.each(function (d, i) {
+    // 'this' refers to the current DOM element (rect)
+    var currentRect = d3.select(this);
+
+    resize_handler(currentRect);
+});
+      }
+
+      function editColor(){
+        d3.selectAll("button").style("background-color", "white");
+        d3.select("#colorButton").style("background-color", "cyan");
+        console.log("Editing started");
+        editColorBool = true;
+        var rectanglesGroup = d3.select("svg").select(".rectangles");
+
+// Select all rect elements within the group
+var rectangles = rectanglesGroup.selectAll("rect");
+
+// Loop through each rect element
+rectangles.each(function (d, i) {
+    // 'this' refers to the current DOM element (rect)
+    var currentRect = d3.select(this);
+    console.log("Rectangle " + i, currentRect.attr("x"), currentRect.attr("y"), currentRect.style("fill"));
+    currentRect.on(".drag", null);
+});
+      }
+    </script>
+  </body>
+  <script defer src="App.svelte"></script>
+  <script>
+    const target = document.getElementById('svelte-app');
+  
+    const app = new App({
+      target,
+      props: {
+        // Any initial props you want to pass to your Svelte component
+      },
+    });
+  </script>
+  <div id="svelte-app"></div>
+</html>
