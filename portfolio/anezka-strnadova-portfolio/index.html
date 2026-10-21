@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="UX and interaction design portfolio of Anežka Strnadová: tangible, web and VR projects with user research.">
+<title>Anežka Strnadová</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one long page on faint graph paper, the same identity as the slide deck.
+   Intro + project index, then one case study per project: a fact card beside the intro,
+   then the story in sections that follow the deck's slides. Everything stacks to one column on phones. */
+:root{
+  --paper:#f4f6fa;
+  --grid:#e4e9f2;
+  --surface:#fbfbfd;
+  --tint:#eef1f8;
+  --ink:#141a26;
+  --muted:#4f5a6e;
+  --line:#d6dce6;
+  --accent:#2747d4;
+  --title:#0d3075;
+  --bar2:#9fb0f0;
+  --signal:#f4c430;
+  --f-display:"Bricolage Grotesque","Avenir Next",system-ui,sans-serif;
+  --f-body:"Instrument Sans","Helvetica Neue",Arial,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --measure:66ch;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0e121a;--grid:#181e2a;--surface:#141a25;--tint:#1b2231;--ink:#e8ecf4;--muted:#a1abbd;--line:#2a3243;
+  --accent:#8fa5ff;--title:#c3cfff;--bar2:#4f5f9e;--signal:#f4c430;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0e121a;--grid:#181e2a;--surface:#141a25;--tint:#1b2231;--ink:#e8ecf4;--muted:#a1abbd;--line:#2a3243;
+  --accent:#8fa5ff;--title:#c3cfff;--bar2:#4f5f9e;--signal:#f4c430;color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-padding-top:16px}
+body{
+  background-color:var(--paper);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:28px 28px;
+  color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+}
+a{color:var(--accent);text-underline-offset:3px}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+.wrap{max-width:1120px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;letter-spacing:-.01em}
+p{margin:0}
+.eyebrow{font-family:var(--f-mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.label{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+
+/* Intro */
+.intro{padding-block:72px 44px;display:grid;gap:26px}
+.intro h1{font-size:clamp(46px,8.4vw,96px);line-height:.98;font-weight:700}
+.intro .lede{font-size:clamp(19px,2.2vw,23px);max-width:46ch;line-height:1.45}
+.intro .edu{font-family:var(--f-display);font-size:clamp(16px,1.8vw,19px);font-weight:500;color:var(--muted)}
+
+/* Index */
+.index{border-top:2px solid var(--ink);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0 24px;margin-bottom:56px}
+.index a{display:grid;gap:6px;align-content:start;padding:18px 0 22px;text-decoration:none;color:var(--ink)}
+.index .n{font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+.index .t{font-family:var(--f-display);font-size:19px;font-weight:600;line-height:1.25}
+.index a:hover .t,.index a:focus-visible .t{color:var(--accent)}
+
+/* Case study */
+.case{background:var(--surface);border:1px solid var(--line);border-radius:8px;margin-bottom:48px;padding:44px clamp(20px,4.5vw,56px) 52px;display:grid;gap:52px}
+.case-head{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:24px 48px;align-items:start}
+.case-head .intro-col{display:grid;gap:18px;min-width:0}
+.case-head h2{font-size:clamp(34px,5vw,58px);line-height:1.02;font-weight:700;color:var(--title)}
+.case-head .sum{font-size:19px;line-height:1.55;max-width:var(--measure)}
+.facts{background:var(--tint);border-radius:10px;padding:22px 24px;display:grid;gap:14px}
+.facts div{display:grid;gap:3px}
+.facts dd,.facts .v{margin:0;font-size:15.5px;line-height:1.45}
+.facts dl{margin:0;display:grid;gap:14px}
+.facts .links{border-top:1px solid var(--line);padding-top:14px;display:grid;gap:4px;font-size:15px;overflow-wrap:anywhere}
+
+.block{display:grid;gap:22px;min-width:0}
+.block > h3{font-size:clamp(24px,2.8vw,32px);font-weight:600;line-height:1.15}
+.block .sub{font-family:var(--f-display);font-size:20px;font-weight:600}
+.cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:start}
+.cols.media{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr)}
+.stack{display:grid;gap:14px;align-content:start;min-width:0}
+ul{margin:0;padding-left:1.15em;display:grid;gap:8px}
+li::marker{color:var(--accent)}
+strong{font-weight:600}
+.dim{color:var(--muted)}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.stat{background:var(--tint);border-radius:10px;padding:18px 20px;display:grid;gap:6px;align-content:start}
+.stat b{font-family:var(--f-display);font-size:38px;line-height:1;font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums}
+.stat span{font-size:14.5px;line-height:1.4;color:var(--muted)}
+
+.callout{border-left:4px solid var(--signal);padding:4px 0 4px 18px;display:grid;gap:4px}
+.callout p{font-size:17px}
+
+figure{margin:0;display:grid;gap:10px;align-content:start}
+figure img{display:block;width:100%;height:auto;border-radius:8px;border:1px solid var(--line);background:#fff}
+figure.tall img{max-height:620px;width:auto;max-width:100%;justify-self:start}
+figcaption{font-size:14px;line-height:1.45;color:var(--muted)}
+.pics{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:18px;align-items:start}
+
+.table-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:15.5px}
+th,td{text-align:left;padding:11px 14px 11px 0;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:500}
+td:first-child{color:var(--muted)}
+
+/* Snap-distance chart: bars start at 1 on a 1–7 scale */
+.chart{background:var(--tint);border-radius:10px;padding:22px 24px;display:grid;gap:14px}
+.legend{display:flex;gap:20px;font-size:14px;color:var(--muted)}
+.legend i{display:inline-block;width:14px;height:14px;border-radius:3px;background:var(--accent);margin-right:7px;vertical-align:-2px}
+.legend i.b2{background:var(--bar2)}
+.row{display:grid;grid-template-columns:56px minmax(0,1fr);gap:12px;align-items:center}
+.row .k{font-family:var(--f-mono);font-size:13px}
+.bars{display:grid;gap:4px}
+.bar{display:grid;grid-template-columns:minmax(0,1fr) 30px;gap:8px;align-items:center}
+.track{height:14px;background:linear-gradient(90deg,var(--line) 1px,transparent 1px) 0 0/calc(100%/6) 100%}
+.track i{display:block;height:100%;background:var(--accent);border-radius:0 3px 3px 0}
+.bar.b2 .track i{background:var(--bar2)}
+.bar em{font-style:normal;font-family:var(--f-mono);font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.axis{display:grid;grid-template-columns:56px minmax(0,1fr);gap:12px}
+.axis div{display:grid;grid-template-columns:minmax(0,1fr) 30px;gap:8px}
+.axis span{display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:11.5px;color:var(--muted)}
+
+footer{border-top:2px solid var(--ink);padding-block:22px 64px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;color:var(--muted);font-size:15px}
+
+@media (max-width:900px){
+  .index{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .case-head,.cols,.cols.media{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:480px){
+  .index{grid-template-columns:minmax(0,1fr)}
+  .index a{padding-block:14px;border-bottom:1px solid var(--line)}
+  .pics{grid-template-columns:minmax(0,1fr)}
+  .case{padding-top:32px;gap:40px}
+}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+</style>
+</head>
+<body style="margin:0">
+
+<div class="wrap">
+
+<header class="intro">
+  <p class="eyebrow">UX research · Interaction design · HCI</p>
+  <h1>Anežka<br>Strnadová</h1>
+  <p class="lede">I design interactions, build prototypes and test them with real users. This portfolio presents a game combining physical and digital parts, a web graphic editor and virtual reality applications.</p>
+  <p class="edu">MSc Computer Science, Aarhus University · BSc Informatics, Masaryk University</p>
+</header>
+
+<nav class="index" aria-label="Projects">
+  <a href="#build-from-far-away"><span class="n">01</span><span class="t">Build From Far Away: a hybrid meeting icebreaker</span></a>
+  <a href="#comic-editor"><span class="n">02</span><span class="t">A comic editor for scientists who aren’t designers</span></a>
+  <a href="#tetris"><span class="n">03</span><span class="t">3D Tetris: how strongly should a VR puzzle snap?</span></a>
+  <a href="#vr-thesis"><span class="n">04</span><span class="t">How spatial ability shapes object manipulation in VR</span></a>
+</nav>
+
+<!-- ================= 01 BUILD FROM FAR AWAY ================= -->
+<article class="case" id="build-from-far-away">
+  <div class="case-head">
+    <div class="intro-col">
+      <p class="eyebrow">01 · Multimodal interaction course · presented at the LEGO Group headquarters</p>
+      <h2>Build From Far Away</h2>
+      <p class="sum">In hybrid meetings, remote participants tend to feel like spectators. In our icebreaker neither side can win alone: the person in the room feels a hidden LEGO toy with their hands, and the person online tries to recreate it on their screen.</p>
+    </div>
+    <aside class="facts">
+      <dl>
+        <div><dt class="label">Role</dt><dd>Experience designer, software developer and researcher</dd></div>
+        <div><dt class="label">Participants</dt><dd>7, both roles each</dd></div>
+        <div><dt class="label">Methods</dt><dd>Tangible prototype, user study</dd></div>
+        <div><dt class="label">Tools</dt><dd>D3.js, Arduino, LEGO</dd></div>
+      </dl>
+      <div class="links"><span>Group project with Xinrui Huang</span><a href="https://youtu.be/ZoiGtPoyS64">Watch the video ↗</a></div>
+    </aside>
+  </div>
+
+  <section class="block">
+    <p class="eyebrow">Interaction design</p>
+    <h3>Roles that depend on each other</h3>
+    <div class="cols media">
+      <div class="stack">
+        <p class="sub">How it plays</p>
+        <ul>
+          <li><span class="dim">On site:</span> feel the toy inside a big yellow box, and press a physical LEGO button for each brick</li>
+          <li>Each press drops the corresponding brick onto the remote player’s screen</li>
+          <li><span class="dim">Remote:</span> try to recreate the toy on the screen, arranging the bricks while you both talk it through</li>
+          <li>The app automatically announces whether the recreated image is correct</li>
+        </ul>
+        <p class="sub" style="margin-top:10px">Key decisions</p>
+        <ul>
+          <li><strong>Nobody gets muted:</strong> prior work showed silence makes remote players feel isolated</li>
+          <li><strong>We can’t see colour with our hands:</strong> bricks of each colour have different shapes</li>
+          <li><strong>Multimodal interaction:</strong> an animation and a sound announce each new brick that appears on the screen</li>
+        </ul>
+      </div>
+      <div class="pics">
+        <figure>
+          <img src="img/lego-box.jpg" alt="A large yellow 3D-printed box shaped like a LEGO brick, with a covered hand hole">
+          <figcaption>The tactile 3D-printed box. A LEGO toy is hidden inside.</figcaption>
+        </figure>
+        <figure>
+          <img src="img/lego-setup.jpg" alt="A laptop showing the building grid, next to three buttons made of LEGO bricks">
+          <figcaption>LEGO-brick buttons, wired through an Arduino, spawn bricks in the web app.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <p class="eyebrow">Findings and iteration</p>
+    <h3>User study: visuals carried the game, but sound notifications needed improvements</h3>
+    <div class="stats">
+      <div class="stat"><b>7 / 7</b><span>strongly agreed the visual cue helped them notice new bricks</span></div>
+      <div class="stat"><b>6 / 7</b><span>relied mainly on visuals in the on-site role</span></div>
+      <div class="stat"><b>8.1–9.3</b><span>mean ratings out of 10 for enjoyment and clarity</span></div>
+    </div>
+    <div class="cols media">
+      <div class="stack">
+        <ul>
+          <li>In a noisy meeting room, several players missed the soft falling sound announcing that a new brick had appeared on the screen</li>
+          <li>Even a simple apple was hard to rebuild</li>
+        </ul>
+        <div class="callout" style="margin-top:8px">
+          <span class="label">Change</span>
+          <p>Replaced the falling sound with a short melody (an earcon) that stands out from meeting noise.</p>
+        </div>
+      </div>
+      <figure>
+        <img src="img/lego-apple.jpg" alt="A pixel-style apple built from red, brown and green bricks inside a frame" style="max-width:380px">
+        <figcaption>The target build used in the study: an apple made of three brick types.</figcaption>
+      </figure>
+    </div>
+  </section>
+</article>
+
+<!-- ================= 02 COMIC EDITOR ================= -->
+<article class="case" id="comic-editor">
+  <div class="case-head">
+    <div class="intro-col">
+      <p class="eyebrow">02 · Bachelor’s thesis · Masaryk University</p>
+      <h2>A comic editor for scientists who aren’t designers</h2>
+      <p class="sum">People understand complex processes better from comics, but making one is slow and existing tools don’t fit researchers. I designed and built a web editor for creating scientific comics.</p>
+    </div>
+    <aside class="facts">
+      <dl>
+        <div><dt class="label">Role</dt><dd>Solo designer, developer and researcher</dd></div>
+        <div><dt class="label">Participants</dt><dd>1 pilot + 10</dd></div>
+        <div><dt class="label">Methods</dt><dd>Think-aloud study</dd></div>
+        <div><dt class="label">Tools</dt><dd>HTML, CSS, JavaScript, D3.js</dd></div>
+      </dl>
+      <div class="links"><a href="https://www.youtube.com/watch?v=JsoMF6ajBCs">Watch the demo video ↗</a></div>
+    </aside>
+  </div>
+
+  <figure>
+    <img src="img/comic-bubble.jpg" alt="A comic panel with an atom, a scientist, a caption and a speech bubble crossing the panel border" style="max-width:640px">
+    <figcaption>An example of a comic window created in the editor.</figcaption>
+  </figure>
+
+  <section class="block">
+    <p class="eyebrow">Competitive analysis</p>
+    <h3>Every gap became a feature</h3>
+    <div class="cols">
+      <div class="stack">
+        <ul>
+          <li><strong>Illustrator</strong> can do anything, but it’s paid and slow to learn</li>
+          <li><strong>BioRender</strong> has great science images but no comic windows</li>
+          <li><strong>Pixton</strong> and <strong>StoryboardThat</strong> are user-friendly, but built for schoolchildren, with fixed layouts</li>
+        </ul>
+        <p>I designed and developed a fully working web application from scratch.</p>
+        <div class="callout">
+          <span class="label">New functions</span>
+          <p>Comic windows, a grid of panels generated with one click, speech bubbles, and image upload with a shared gallery.</p>
+        </div>
+      </div>
+      <figure>
+        <img src="img/comic-competitor-gaps.jpg" alt="The editor interface with three highlighted features: add a comic window, add a speech bubble and the panel grid generator">
+        <figcaption>Added for BioRender’s gaps: (A) add a comic window, (B) add a speech bubble, (C) generate a grid of panels.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="block">
+    <p class="eyebrow">Usability testing</p>
+    <h3>User study: ten tasks, think-aloud, 40 minutes each</h3>
+    <div class="stats">
+      <div class="stat"><b>10 / 10</b><span>completed every task and found the design pleasing</span></div>
+      <div class="stat"><b>9 / 10</b><span>said the icons clearly showed what each button does</span></div>
+      <div class="stat"><b>5</b><span>asked for undo and redo, the top missing feature</span></div>
+    </div>
+    <div class="cols">
+      <div class="stack">
+        <p class="sub">Resizing was not intuitive</p>
+        <p>Click, move the cursor, click again: this confused almost everyone. People expected to click and drag any corner instead.</p>
+      </div>
+      <div class="stack">
+        <p class="sub">Grouping was hidden</p>
+        <p>The Ungroup button only appeared after selecting a group, which was confusing. Now the button is always visible, just disabled until a group is selected.</p>
+      </div>
+      <div class="stack">
+        <p class="sub">Different expectations</p>
+        <p>People with no graphic design experience expected to select multiple objects by dragging the mouse over them. People with more experience wanted to select multiple objects using Shift.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <p class="eyebrow">Iteration</p>
+    <h3>What I changed after testing</h3>
+    <div class="cols media">
+      <div class="stack">
+        <div class="table-wrap">
+          <table>
+            <tr><th>Problem</th><th>Change</th></tr>
+            <tr><td>Button purpose wasn’t always clear</td><td>Text labels on hover for every button</td></tr>
+            <tr><td>Beginners couldn’t select objects to group</td><td>A drag-to-select rectangle</td></tr>
+            <tr><td>Panels couldn’t be dragged by their caption</td><td>The whole panel is a drag target</td></tr>
+            <tr><td>Grey delete buttons looked disabled</td><td>Changed colour to red</td></tr>
+            <tr><td>“Add panel” icon was a plain rectangle</td><td>An icon that looks more like a comic window</td></tr>
+          </table>
+        </div>
+        <p class="sub" style="margin-top:14px">Future work</p>
+        <ul>
+          <li>Based on the feedback, resizing objects could be more intuitive</li>
+          <li>Undo and redo functions should be added</li>
+          <li>The application should be tested with more people from more diverse backgrounds</li>
+        </ul>
+      </div>
+      <figure class="tall">
+        <img src="img/comic-gallery-iterations.jpg" alt="Four versions of the image gallery controls, ending with blue add and red delete buttons">
+        <figcaption>Four gallery iterations.</figcaption>
+      </figure>
+    </div>
+  </section>
+</article>
+
+<!-- ================= 03 3D TETRIS ================= -->
+<article class="case" id="tetris">
+  <div class="case-head">
+    <div class="intro-col">
+      <p class="eyebrow">03 · 3D User Interfaces course · Aarhus University</p>
+      <h2>3D Tetris: how strongly should a VR puzzle snap?</h2>
+      <p class="sum">Placing objects precisely in mid-air is hard. We built a 3D Tetris-style puzzle, iteratively improved its design to make it more user-friendly and intuitive, then tested different distances for the ghost preview and snapping.</p>
+    </div>
+    <aside class="facts">
+      <dl>
+        <div><dt class="label">Role</dt><dd>Co-designer, co-developer</dd></div>
+        <div><dt class="label">Participants</dt><dd>10 regular VR users</dd></div>
+        <div><dt class="label">Methods</dt><dd>Within-subjects study, Latin square</dd></div>
+        <div><dt class="label">Tools</dt><dd>Unity, Quest 2, hand tracking</dd></div>
+      </dl>
+      <div class="links"><span>Group project with Kamil Kesik</span><a href="https://www.youtube.com/watch?v=0_gLFx9rYZ4">Watch the video ↗</a></div>
+    </aside>
+  </div>
+
+  <figure>
+    <img src="img/blox-game.jpg" alt="Coloured puzzle pieces being fitted into a transparent 3 by 3 by 3 grid in VR" style="max-width:760px">
+    <figcaption>Pieces being fitted into the transparent 3 × 3 × 3 grid.</figcaption>
+  </figure>
+
+  <section class="block">
+    <p class="eyebrow">Interaction design</p>
+    <h3>Making placement predictable and intuitive</h3>
+    <div class="cols">
+      <div class="stack">
+        <p class="sub">How placement works</p>
+        <ul>
+          <li>While a shape is held, its rotation rounds to the nearest 90°</li>
+          <li>Inside the snap distance, a ghost preview appears, showing where the shape will land on the grid</li>
+          <li>A shape that would overlap another turns red and won’t snap</li>
+          <li>A short sound confirms each snap</li>
+        </ul>
+      </div>
+      <div class="stack">
+        <p class="sub">Changes for the user study</p>
+        <p>Fully 3D pieces were too hard to finish four times in 20 minutes, so we used flat pieces in a 3D grid.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <p class="eyebrow">Study and findings</p>
+    <h3>User study: four snap distances, one puzzle</h3>
+    <div class="cols">
+      <figure class="chart" aria-label="Bar chart of mean pleasantness and intuitiveness ratings for each snap distance">
+        <div class="legend"><span><i></i>Pleasant</span><span><i class="b2"></i>Intuitive</span></div>
+        <div class="row"><span class="k">5 cm</span><div class="bars">
+          <div class="bar"><div class="track"><i style="width:63.33%"></i></div><em>4.8</em></div>
+          <div class="bar b2"><div class="track"><i style="width:71.67%"></i></div><em>5.3</em></div></div></div>
+        <div class="row"><span class="k">10 cm</span><div class="bars">
+          <div class="bar"><div class="track"><i style="width:88.33%"></i></div><em>6.3</em></div>
+          <div class="bar b2"><div class="track"><i style="width:88.33%"></i></div><em>6.3</em></div></div></div>
+        <div class="row"><span class="k">25 cm</span><div class="bars">
+          <div class="bar"><div class="track"><i style="width:81.67%"></i></div><em>5.9</em></div>
+          <div class="bar b2"><div class="track"><i style="width:81.67%"></i></div><em>5.9</em></div></div></div>
+        <div class="row"><span class="k">40 cm</span><div class="bars">
+          <div class="bar"><div class="track"><i style="width:81.67%"></i></div><em>5.9</em></div>
+          <div class="bar b2"><div class="track"><i style="width:81.67%"></i></div><em>5.9</em></div></div></div>
+        <div class="axis"><span></span><div><span><b style="font-weight:400">1</b><b style="font-weight:400">2</b><b style="font-weight:400">3</b><b style="font-weight:400">4</b><b style="font-weight:400">5</b><b style="font-weight:400">6</b><b style="font-weight:400">7</b></span><span></span></div></div>
+        <figcaption>Mean ratings from 1 (negative) to 7 (positive), n = 10.</figcaption>
+      </figure>
+      <div class="stack">
+        <p><strong>We tried to find out how far away the Tetris shapes should snap to the grid. We also studied the overall game experience.</strong></p>
+        <p class="sub" style="margin-top:6px">Main results</p>
+        <ul>
+          <li><strong>5 cm felt worst:</strong> the ghost appeared too late to aim with</li>
+          <li><strong>10 cm scored best</strong> for intuitive and pleasant</li>
+          <li><strong>40 cm</strong> was easiest for one piece, but less precise as the grid filled</li>
+          <li>A medium snap distance gives enough help to feel smooth, without taking control away from the player</li>
+          <li>The game rated 6.5 / 7 for enjoyment</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</article>
+
+<!-- ================= 04 VR THESIS ================= -->
+<article class="case" id="vr-thesis">
+  <div class="case-head">
+    <div class="intro-col">
+      <p class="eyebrow">04 · Master’s thesis · Aarhus University</p>
+      <h2>How spatial ability shapes object manipulation in VR</h2>
+      <p class="sum">Some people are much better at mental rotation than others. I ran a controlled study to see whether the VR interaction technique (direct vs indirect manipulation) widens that gap, and made design recommendations based on the results.</p>
+    </div>
+    <aside class="facts">
+      <dl>
+        <div><dt class="label">Role</dt><dd>Sole researcher, designer and VR developer</dd></div>
+        <div><dt class="label">Participants</dt><dd>22 students</dd></div>
+        <div><dt class="label">Methods</dt><dd>Pen-and-paper mental rotation test, VR experiment, NASA-TLX</dd></div>
+        <div><dt class="label">Tools</dt><dd>Unity, Quest Pro, gaze tracking</dd></div>
+      </dl>
+      <div class="links"><a href="https://youtu.be/W4abcLXF9RQ">Watch the demo video ↗</a></div>
+    </aside>
+  </div>
+
+  <figure>
+    <img src="img/vr-techniques.jpg" alt="Left: a controller touching the orange shape. Right: the shape floating at a distance from the controller" style="max-width:640px">
+    <figcaption>Direct (left) and gaze-assisted indirect (right) manipulation.</figcaption>
+  </figure>
+
+  <section class="block">
+    <p class="eyebrow">Method</p>
+    <h3>What I built and measured</h3>
+    <div class="cols">
+      <div class="stack">
+        <p class="sub">Study design</p>
+        <ul>
+          <li>Spatial ability was measured on paper first, with the 24-item Mental Rotation Test by Vandenberg and Kuse</li>
+          <li>Participants grabbed the orange object and aligned it with the blue grid, using two different manipulation techniques</li>
+          <li>I logged timing, regrips, and hand and head movement</li>
+        </ul>
+      </div>
+      <figure>
+        <img src="img/vr-docking-task.jpg" alt="Three frames: the orange shape is grabbed, moved into the blue target and turns green">
+        <figcaption>The docking task. The shape turns green when aligned with the blue grid. Participants repeated it with different rotations of the target grid.</figcaption>
+      </figure>
+    </div>
+    <div class="stack">
+      <p class="sub">Decisions from the pilot study</p>
+      <ul>
+        <li><strong>Controllers instead of hand tracking:</strong> a pinch gesture kept unintentionally opening the Quest system menu</li>
+        <li><strong>Easier gaze selection:</strong> selection targets a volume around the whole shape</li>
+        <li><strong>Compensating for the delay between looking and pressing:</strong> selection uses where the user looked 95 ms before the button press</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block">
+    <p class="eyebrow">Findings</p>
+    <h3>User study: difficulty mattered more than technique</h3>
+    <div class="stats">
+      <div class="stat"><b>51%</b><span>of variance in manipulation time explained by spatial ability alone</span></div>
+      <div class="stat"><b>11 / 11</b><span>split in preference between direct and indirect manipulation</span></div>
+    </div>
+    <div class="cols">
+      <ul>
+        <li>Users with good spatial abilities planned the rotation before grabbing; users with lower spatial abilities used trial and error</li>
+        <li>The gap between the two groups grew with rotation size: small at 0° and large at 135°</li>
+        <li>Indirect (gaze-based) manipulation removed the performance gap when picking up the object, but not when rotating it</li>
+        <li>Direct felt more natural; indirect was less physically demanding</li>
+      </ul>
+      <figure>
+        <img src="img/vr-regression.jpg" alt="Scatter plot: manipulation time falls as spatial ability score rises">
+        <figcaption>Manipulation time against spatial ability score. Each dot is one participant.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="block">
+    <p class="eyebrow">Implications</p>
+    <h3>How could designers help people with weaker spatial abilities?</h3>
+    <div class="cols">
+      <div class="stack">
+        <ul>
+          <li>Snapping the object once it is near the target orientation</li>
+          <li>A ghost preview of the final orientation</li>
+          <li>Rotation hints showing which axis to turn around (arrows, animation hints, colour change)</li>
+          <li>Live feedback on how close the placement is</li>
+        </ul>
+        <p class="dim">For researchers: spatial ability explains so much variance that unbalanced groups could make one technique look better than it is.</p>
+      </div>
+      <div class="facts">
+        <p class="sub" style="font-family:var(--f-display);font-size:20px;font-weight:600">Future work</p>
+        <p>Some participants tried to move the static target grid instead of the movable object. Next time I would distinguish the two objects more clearly: the movable object would announce itself with a short animation, and participants would watch a demo video before the training trials.</p>
+      </div>
+    </div>
+  </section>
+</article>
+
+<footer>
+  <span>Anežka Strnadová</span>
+  <span>MSc Computer Science, Aarhus University</span>
+</footer>
+
+</div>
+
+</body>
+</html>
